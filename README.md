@@ -146,7 +146,7 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
 - utils/ -
 
   - init.py - import all in pwd
-  - augmentations.py - contains instances:
+  - augmentations.py - contains instances of all preprocessing and postprocessing methods:
     - function intersect - return intersection of two given bounding boxes
     - function jaccard_numpy - return IoU or jaccard overlap of two given bounding boxes
     - class Compose - definitions of different transforms to perform
