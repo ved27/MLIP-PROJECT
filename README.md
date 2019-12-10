@@ -90,11 +90,11 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
 
 ### Performance 
 
-| Category    | Baseline (mAP) | SSD with FF concat (mAP) | SSD with FF eltsum module (mAP) | pyramidal feature extractor
+| Category    | Baseline (mAP) | SSD with FF concat (mAP) | SSD with FF eltsum module (mAP) | pyramidal feature extractor |
 
-| ---------- |  ------------- | ----------------------- - | ------------------------------- | ------------------------
+| ---------- |  ------------- | ----------------------- - | ------------------------------- | ------------------------ |
 
-| Evaluation  |   77.47%     |   77.985%                |     77.987%                      |      78.04%
+| Evaluation  |   77.47%     |   77.985%                |     77.987%                      |      78.04%    |
 
 
 ### Directory structure
