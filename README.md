@@ -152,7 +152,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
   - init.py - import all in pwd
   - augmentations.py - contains instances of all preprocessing and postprocessing methods 
 - weights/ - \*.pth files containing pretrained weights of SSD  
-- trained_weights/ - \*.pth files having trained weights of experiments for VOC
+- trained_weights/ - \*.pth files having trained weights of experiments on VOC
 - requirements.txt - package and module requirements for running the project
 - config_vgg16_ssd.py - has settings to run experiments.
 - test_images/ - contains imags to test the experimented trained models on web and real world images 
