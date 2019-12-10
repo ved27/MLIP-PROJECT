@@ -97,7 +97,8 @@ SSD with FF concat : 77.985%(mAP)
 SSD with FF eltsum module : 77.987% (mAP) 
 
 pyramidal feature extractor (FSSD): 78.04% (mAP) 
-  
+
+ mAP
  ![alt text](https://lh3.googleusercontent.com/-GInkZiyyVeA/Xe5Ra3aNb3I/AAAAAAAAAFg/BWLdkWxk5yIaJvelN1_CQ3EOH5TbheHPQCK8BGAsYHg/s0/2019-12-09.png)
 
 ### Directory structure
