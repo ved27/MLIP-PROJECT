@@ -1,0 +1,269 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.autograd import Variable
+from layers import *
+from data import voc
+import os
+from torch.nn import ModuleList , Sequential, Conv2d , ReLU ,  ConvTranspose2d
+
+class SSD(nn.Module):
+    """
+    Defines the SSD-Multibox Architecture
+    The network uses the base VGG network followed by the
+    added multibox convolutional layers.  
+    
+    Each multibox layer branches into
+        1) conv2d for class conf scores
+        2) conv2d for localization predictions
+        3) associated priorbox layer to produce default bounding
+           boxes specific to the layer's feature map size.
+    """
+
+    def __init__(self, phase, size, base, extras, head, num_classes , feature_fusion):
+        super(SSD, self).__init__()
+        self.phase = phase
+        self.num_classes = num_classes
+        self.cfg = voc
+        self.priorbox = PriorBox(self.cfg)
+        self.priors = self.priorbox.forward()
+        self.size = size
+
+        # SSD network
+        self.vgg = nn.ModuleList(base)
+        self.L2Norm = L2Norm(512, 20)
+        self.extras = nn.ModuleList(extras)
+        
+        #SSD feature susion deconv
+        self.feature_fusion = nn.ModuleList(feature_fusion)
+        self.L2Norm_1 = L2Norm(512 , 20)
+        self.L2Norm_2 = L2Norm(512 , 10)     
+        
+        self.loc = nn.ModuleList(head[0])
+        self.conf = nn.ModuleList(head[1])
+
+        if phase == 'test':
+            self.softmax = nn.Softmax(dim=-1)
+            self.detect = Detect(num_classes, 0, 200, 0.01, 0.45)
+
+    def forward(self, x):
+        """
+        Performs forward propagation on a given image
+        """
+        sources = list()
+        loc = list()
+        conf = list()
+        
+        #print("length of module list of vgg " , len( self.vgg)) 
+        
+        sources_deconv = list()
+        
+        for k in range(len(self.vgg)):
+            x= self.vgg[k](x)
+            if k==22:
+                #s = self.L2Norm(x)
+                sources_deconv.append(x)
+            if k== 29:
+                sources_deconv.append(x) 
+        temp_x = x 
+        
+        y_1 = self.feature_fusion[0](sources_deconv[0])
+        y_2 = self.feature_fusion[2](self.feature_fusion[1](sources_deconv[1]))
+        y_r= self.L2Norm_1(y_1)
+        y_l = self.L2Norm_2(y_2)
+        
+        y_r_l = F.relu( y_r+y_l  )
+        
+        sources.append(y_r_l) 
+        sources.append(temp_x)
+
+        # apply extra layers and cache source layer outputs
+        for k, v in enumerate(self.extras):
+            x = F.relu(v(x), inplace=True)
+            if k % 2 == 1:
+                sources.append(x)
+        
+        # apply multibox head to source layers
+        for (x, l, c) in zip(sources, self.loc, self.conf):
+            loc.append(l(x).permute(0, 2, 3, 1).contiguous())
+            conf.append(c(x).permute(0, 2, 3, 1).contiguous())
+
+        loc = torch.cat([o.view(o.size(0), -1) for o in loc], 1)
+        conf = torch.cat([o.view(o.size(0), -1) for o in conf], 1)
+        if self.phase == "test":
+            output = self.detect(
+                loc.view(loc.size(0), -1, 4),                   # loc preds
+                self.softmax(conf.view(conf.size(0), -1,
+                             self.num_classes)),                # conf preds
+                self.priors.type(type(x.data))                  # default boxes
+            )
+        else:
+            output = (
+                loc.view(loc.size(0), -1, 4),
+                conf.view(conf.size(0), -1, self.num_classes),
+                self.priors
+            )
+        return output
+
+    def load_weights(self, base_file):
+        other, ext = os.path.splitext(base_file)
+        if ext == '.pkl' or '.pth':
+            print('Loading weights into state dict...')
+            self.load_state_dict(torch.load(base_file,
+                                 map_location=lambda storage, loc: storage))
+            print('Finished!')
+        else:
+            print('Use .pth or .pkl files only.')
+
+
+def Maxpool_layer(ceil):
+    if ceil==1:
+        return [nn.MaxPool2d(kernel_size=2, stride=2, ceil_mode=True)]
+    else:
+        return [nn.MaxPool2d(kernel_size=2, stride=2, ceil_mode=False)]
+
+def Conv_layer(in_channels,v, batch_norm):
+    conv2d = nn.Conv2d(in_channels, v, kernel_size=3, padding=1)
+    if batch_norm:
+        return [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
+    else:
+        return [conv2d, nn.ReLU(inplace=True)]
+
+def Conv_Layers(in_channels,v,batch_norm,len_stack):
+    stack_layer= nn.ModuleList()
+    for i in range(len_stack):
+        stack_layer += nn.ModuleList(Conv_layer(in_channels,v,batch_norm))
+        in_channels=v
+
+    return stack_layer
+        
+
+def feature_fusion_layers(in_channels) : 
+    
+    layers = nn.ModuleList() 
+    layers += [ Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1) ] 
+    layers += [ ConvTranspose2d(512, 512, kernel_size=4, stride=2, padding=1) ]  
+    layers += [ Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1) ]
+    #layers += [ Conv2d(in_channels=1024, out_channels=512, kernel_size=1 ) ]
+    
+    return layers 
+
+    
+    
+    
+    
+def vgg(i, batch_norm=False):
+    """
+    Models the base vgg-net.
+    Derived from pytorch's vgg model.
+    """
+    layers = nn.ModuleList()
+    in_channels = i
+    layers += Conv_Layers(in_channels,64,batch_norm,2)
+    layers += Maxpool_layer(0)
+    in_channels = 64
+    layers += Conv_Layers(in_channels,128,batch_norm,2)
+    layers += Maxpool_layer(0) 
+    in_channels = 128
+    layers += Conv_Layers(in_channels,256,batch_norm,3)
+    layers += Maxpool_layer(1) 
+    in_channels = 256
+    layers += Conv_Layers(in_channels,512,batch_norm,3)
+    layers += Maxpool_layer(0) 
+    in_channels = 512
+    layers += Conv_Layers(in_channels,512,batch_norm,3)
+    pool5 = nn.MaxPool2d(kernel_size=3, stride=1, padding=1)
+    conv6 = nn.Conv2d(512, 1024, kernel_size=3, padding=6, dilation=6)
+    conv7 = nn.Conv2d(1024, 1024, kernel_size=1)
+    layers += [pool5, conv6,
+               nn.ReLU(inplace=True), conv7, nn.ReLU(inplace=True)]
+    return layers
+
+
+def extra_conv_layer(in_channels, v, s, pad):
+    if s==1 and pad == 1:
+        return [nn.Conv2d(in_channels, v, kernel_size=(3,3),stride=(2,2), padding=(1,1))]
+    elif s==1 and pad==0:
+        return [nn.Conv2d(in_channels, v, kernel_size=(3,3))]
+    else:
+        return [nn.Conv2d(in_channels, v, kernel_size=(1,1))]
+
+
+def add_extras(i, batch_norm=False):
+    # Extra layers added to VGG for feature scaling
+    layers = nn.ModuleList()
+    in_channels = i
+   
+    layers += extra_conv_layer(in_channels, 256, 0, 0)
+    in_channels=256
+    layers += extra_conv_layer(in_channels, 512, len(layers)%2, 1)
+    in_channels=512
+    for i in range(3):
+        layers += extra_conv_layer(in_channels, 128, 0, 0)
+        in_channels=128
+        if i==0:
+            layers += extra_conv_layer(in_channels, 256, len(layers)%2, 1)
+        else:
+            layers += extra_conv_layer(in_channels, 256, len(layers)%2, 0)
+        in_channels=256
+    return layers
+
+
+def multibox(vgg, extra_layers, num_classes):
+    """
+    Builds the final net
+    """
+   
+    extras = ModuleList([
+   
+            Conv2d(in_channels=1024, out_channels=256, kernel_size=1),   
+            Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=2, padding=1),
+ 
+            Conv2d(in_channels=512, out_channels=128, kernel_size=1),
+            Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=1),
+     
+  
+            Conv2d(in_channels=256, out_channels=128, kernel_size=1),
+            Conv2d(in_channels=128, out_channels=256, kernel_size=3),
+ 
+ 
+            Conv2d(in_channels=256, out_channels=128, kernel_size=1),
+            Conv2d(in_channels=128, out_channels=256, kernel_size=3),
+  
+      #  )
+    ])
+
+    regression_headers = ModuleList([
+        Conv2d(in_channels=512, out_channels=4 * 4, kernel_size=3, padding=1),
+        Conv2d(in_channels=1024, out_channels=6 * 4, kernel_size=3, padding=1),
+        Conv2d(in_channels=512, out_channels=6 * 4, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=6 * 4, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=4 * 4, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=4 * 4, kernel_size=3, padding=1), # TODO: change to kernel_size=1, padding=0?
+    ])
+
+    classification_headers = ModuleList([
+        Conv2d(in_channels=512, out_channels=4 * num_classes, kernel_size=3, padding=1),
+        Conv2d(in_channels=1024, out_channels=6 * num_classes, kernel_size=3, padding=1),
+        Conv2d(in_channels=512, out_channels=6 * num_classes, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=6 * num_classes, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=4 * num_classes, kernel_size=3, padding=1),
+        Conv2d(in_channels=256, out_channels=4 * num_classes, kernel_size=3, padding=1), # TODO: change to kernel_size=1, padding=0?
+    ])
+    
+    
+
+
+    return vgg , extras , (regression_headers , classification_headers)
+
+
+def build_ssd(phase, size=300, num_classes=21):
+    """
+    Builds the multibox net, by deriving layers from vgg.
+    """
+        
+    base_, extras_, head_ = multibox(vgg(3),
+                                     add_extras(1024),
+                                     num_classes)
+    return SSD(phase, size, base_, extras_, head_, num_classes , feature_fusion_layers(512) )
+
