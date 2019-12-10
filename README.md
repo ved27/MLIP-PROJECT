@@ -2,7 +2,7 @@
 
 ## Table of contents
 * [Installation](#Installation)
-* [Datasets and trained weights](#Datasets)
+* [Datasets and weights](#Datasets)
 * [Demo](#Demo)
 * [Training](#Training)
 * [Evaluation](#Evaluation)
@@ -25,7 +25,7 @@ To install Python dependencies and modules, use <br>
 - Install one of Python 3+.
 - Then download the dataset by following the [instructions](#datasets) below.
 
-## Datasets and trained weights
+## Datasets and weights
 
 In this project we are using the `2007 and 2012 VOC trainval` dataset in order to train the model. Testing the model is implemented using `2007 VOC test` dataset. You can download the dataset by clicking on the following links. 
 
@@ -36,10 +36,12 @@ In this project we are using the `2007 and 2012 VOC trainval` dataset in order t
 
 Please access the following links and extract the contents to `trained_weights` and `weights` respectively
 
-trained_weights - has trained weights corresponding to experiments performed.
+trained_weights - has trained weights corresponding to experiments performed. 
+
 weights - has pre-trained model weights
 
 [trained_weights](https://drive.google.com/file/d/1TkPI5jLpv2YvMPiDKdqp3TN2E3KJ6IzJ/view?usp=sharing)
+
 [weights](https://drive.google.com/file/d/16f6osiiFouUUUJw0qH_5UtS67VqvuVIs/view?usp=sharing)
 
  
@@ -56,15 +58,21 @@ Make sure you have folders named `trained_weights` and `weights` now
 If you want to run a notebook , assign VOC_ROOT to your `PATH_TO/ ` in the notebook.
 
 Run **SSD_Demo-baseline_vgg16-ssd.ipynb** to run baseline vgg16 ssd on an image in `test_images` or a random image of VOC2007 set
+
 Run **SSD_Demo-feature_fused_concat_deconvolution.ipynb** to run vgg16 ssd with feature fusion concat module added
+
 Run **SSD_Demo-feature_fused_eltsum_deconvolution.ipynb** to run vgg16 ssd with feature fusion eltsum module added
+
 Run **SSD_Demo_vgg16-ssd-pyramidal.ipynb** to run vgg16 with modified ssd using pyramidal feature extractor module 
 
 ### Training
 Models are trained on VOC2012+2007 trainval set 
 
 **PROJ_vgg16_ssd_train-voc2012-2007_feature_fused_concat_deconvolution.ipynb** to resume training of vgg16 ssd with feature fusion concat module 
-**PROJ_vgg16_ssd_train-voc2012-2007_feature_fused_eltsum_deconvolution.ipynb** to resume training of vgg16 ssd with feature fusion eltsum module
+
+**PROJ_vgg16_ssd_train-voc2012-2007_feature_fused_eltsum_deconvolution.ipynb** to resume training of vgg16 ssd with feature fusion 
+eltsum module
+
 **PROJ_vgg16_ssd_train-voc2012-2007_pyramidal.ipynb** to resume training of vgg16 ssd usign pyramidal feature extractor module
 
 ### Evaluation
@@ -73,8 +81,11 @@ Download the PascalVOC2007 test set using `wget http://pjreddie.com/media/files/
 Make sure the contents are extracted to `PATH_TO/VOC2007/ ` 
 
 **PROJ_vgg16_ssd_eval_VOC2007testset .ipynb**
+
 **PROJ_vgg16_ssd_eval_VOC2007testset-feature_fused_concat_deconvolution.ipynb** to evaluate  vgg16 ssd with feature fusion concat module 
+
 **PROJ_vgg16_ssd_eval_VOC2007testset-feature_fused_eltsum_deconvolution.ipynb** to evaluate  vgg16 ssd with feature fusion eltsum module 
+
 **PROJ_vgg16_ssd_eval_VOC2007testset-pyramidal.ipynb**  to resume training of vgg16 ssd using pyramidal feature extractor module
 
 ### Performance 
