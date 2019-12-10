@@ -91,36 +91,34 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
 ### Performance 
 
 | Category    | Baseline (mAP) | SSD with FF concat (mAP) | SSD with FF eltsum module (mAP) | pyramidal feature extractor
+
 | ---------- |  ------------- | ----------------------- - | ------------------------------- | ------------------------
+
 | Evaluation  |   77.47%     |   77.985%                |     77.987%                      |      78.04%
 
 
 ### Directory structure
+- architectures
+   - FSSD_vgg.py - contains the SSD model with pyramidal feature extractor 
+   - base_models.py - contains backbone vgg and wrapper class to general cascade of conv layer 
+   - ssd.py - contains vgg16 + SSD model 
+   - ssd_feature_fused_deconv.py - contains SSD model with feature fusion concat module implemented
+   - ssd_feature_fused_deconv_eltsum.py - contains SSD model with feature fusion eltsum module implemented 
 - data/ -
   - init.py - contains instances:
     - function detection_collate - stack images in 0th dimension and list of tensors with annotations for image and return in tuple format, given tuple of tensor images and list of annotations
     - function base_transform - resize and mean-normalize image
     - class BaseTransform - call base_transform(image) iteratively
-  - config.py - configures VOC dataset with source directory, mean values, color ranges and SSD parameters
-  - voc0712.py - configures VOC dataset with labels considered, and contains instances:
+  - config.py - configures VOC dataset with source directory, with SSD parameters
+  - voc0712.py - configures VOC dataset with labels , and contains :
     - class VOCAnnotationTransform - store dictionaries of classname:index mappings, with an option to discard difficult instances
     - class VOCDetection - update and store annotation based on input image, with functions to get item, pull item, image, annotation and tensor
-- demos/ - demo gifs to show performance of SSD on noisy, clean and denoised video streams (source files for the .gifs shown above)
-- \*_experiments/ - experiments folders for denoising, optimization and video performance evaluation
-  - .ipynb_checkpoints/ - checkpoints folder for modular running of python notebooks
-  - \*.ipynb - jupyter notebooks to visualize descent of loss, other evaluation metrics
-  - \*.jpeg - plots of loss functions in different scenarios
-  - pickles/ - pickle files for easy storing of data during cross validation (different learning rates, momentums etc.)
-  - NOISE_PARAMS.pkl - Pickle file for noise parameters
-  - nntools.py - class script for base classes to implement neural nets, evaluate performance, specify metrics etc.   
-- architectures/-
-    - Network changes to the baseline model
-- layers/ 
+
+- layers/ -
   - functions/ - 
     - init.py - import all files in pwd
     - detection.py - contains instances:
-      - class Detect - enable decoding of location predictions of bboxes and apply NMS based on confidence values and threshold; restrict to tok_k output predictions to reduce noise in results quality (not actual image noise)
-        - function init - allocate memory and initialize
+      - class Detect - decode location predictions of bboxes and apply NMS based on confidence values and threshold; restrict to tok_k output predictions to reduce noise in results quality (not actual image noise)
         - function forward - forward propagation to update layers given input location prediction, confidence and prior data from their respective layers
     - prior_box.py - contains instances:
       - class PriorBox - collate and store priorbox coordinates in center-offset form and tie it to each source feature map
@@ -128,7 +126,7 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
         - forward - forward propagation through priorbox layers
   - modules/ -
     - init.py - import all files in pwd
-    - l2norm.py - contains instances:
+    - l2norm.py 
       - class L2Norm - calculate L2 norm and normalize
         - function init - allocate memory and initialize
         - forward - compute the norm and return
@@ -174,10 +172,11 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
     - class SwapChannels - Transform image by swapping channels in the specified order
     - class PhotometricDistort - apply random brightness and lighting noise, and randomly distort images
     - class SSDAugmentation - itemize all the above transformation functions on every image iteratively
-- weights/ - \*.pth files containing pretrained weights of SSD for the VOC 2012 dataset 
+- weights/ - \*.pth files containing pretrained weights of SSD  
+- trained_weights/ - \*.pth files having trained weights of experiments for VOC
 - requirements.txt - package and module requirements for running the project
-- config_vgg16_ssd.py - Has settings to run experiments.
-
+- config_vgg16_ssd.py - has settings to run experiments.
+- test_images/ - contains imags to test the experimented trained models on web and real world images 
 
 ### References 
 
