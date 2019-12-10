@@ -92,7 +92,7 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
 
 Baseline : 77.48%(mAP) 
 
-SSD with FF concat : 77.985%(mAP) 
+SSD with FF deconv concat : 77.985%(mAP) 
 
 SSD with FF eltsum module : 77.987% (mAP) 
 
@@ -114,9 +114,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
     - function base_transform - resize and mean-normalize image
     - class BaseTransform - call base_transform(image) iteratively
   - config.py - configures VOC dataset with source directory, with SSD parameters
-  - voc0712.py - configures VOC dataset with labels , and contains :
-    - class VOCAnnotationTransform - store dictionaries of classname:index mappings, with an option to discard difficult instances
-    - class VOCDetection - update and store annotation based on input image, with functions to get item, pull item, image, annotation and tensor
+  - voc0712.py - configures VOC dataset with labels 
 
 - layers/ -
   - functions/ - 
