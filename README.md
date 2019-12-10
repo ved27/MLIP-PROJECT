@@ -90,7 +90,7 @@ Make sure the contents are extracted to `PATH_TO/VOC2007/ `
 
 ### Performance 
 
-Baseline : 77.47%(mAP) 
+Baseline : 77.48%(mAP) 
 
 SSD with FF concat : 77.985%(mAP) 
 
