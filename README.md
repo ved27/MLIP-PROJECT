@@ -2,12 +2,11 @@
 
 ## Table of contents
 * [Installation](#Installation)
-* [Datasets](#Datasets)
+* [Datasets and trained weights](#Datasets)
 * [Demo](#Demo)
 * [Training](#Training)
 * [Evaluation](#Evaluation)
 * [Performance](#Performance)
-* [Experiments](#Experiments)
 * [Directory structure](#Directory-structure)
 * [References](#References)
 
@@ -26,7 +25,7 @@ To install Python dependencies and modules, use <br>
 - Install one of Python 3+.
 - Then download the dataset by following the [instructions](#datasets) below.
 
-## Datasets
+## Datasets and trained weights
 
 In this project we are using the `2007 and 2012 VOC trainval` dataset in order to train the model. Testing the model is implemented using `2007 VOC test` dataset. You can download the dataset by clicking on the following links. 
 
@@ -35,35 +34,55 @@ In this project we are using the `2007 and 2012 VOC trainval` dataset in order t
 
 [2012 Dataset](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 
 
+Please access the following links and extract the contents to `trained_weights` and `weights` respectively
+
+trained_weights - has trained weights corresponding to experiments performed.
+weights - has pre-trained model weights
+
+[trained_weights](https://drive.google.com/file/d/1TkPI5jLpv2YvMPiDKdqp3TN2E3KJ6IzJ/view?usp=sharing)
+[weights](https://drive.google.com/file/d/16f6osiiFouUUUJw0qH_5UtS67VqvuVIs/view?usp=sharing)
+
+ 
+
+
 ### Demo
-(((NEEDS CHANGES)))
-Run **SSD_Demo.ipynb** notebook to run Single-Shot Detection on a random image from the VOC2007 dataset. 
 
 Update ` voc_root ` and ` dataset_root ` in config_vgg16_ssd.py with the location of your downloaded dataset.
 `voc_root` -> should contain VOC2007 and VOC2012 directories -> ` PATH_TO/ ` 
-and 
-`dataset_root ` -> `PATH_TO/VOC2007/` 
-### Training
-Run **SSD_train.ipynb** notebook to train the SSD model on the PascalVOC2012+07 dataset.
-### Evaluation
-Run **SSD_Eval.ipynb** notebook to evaluate the SSD model on the VOC2007 test set.
+and  `dataset_root ` -> `PATH_TO/VOC2007/` 
 
-Run **SSD_Eval_Testset.ipynb** notebook to evaluate the SSD model on the PascalVOC2007 test set. (Download the PascalVOC2007 test set using `wget http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar` and run `tar -xvf VOCtest_06-Nov-2007.tar` in the root directory of the repository.
+Make sure you have folders named `trained_weights` and `weights` now
+
+If you want to run a notebook , assign VOC_ROOT to your `PATH_TO/ ` in the notebook.
+
+Run **SSD_Demo-baseline_vgg16-ssd.ipynb** to run baseline vgg16 ssd on an image in `test_images` or a random image of VOC2007 set
+Run **SSD_Demo-feature_fused_concat_deconvolution.ipynb** to run vgg16 ssd with feature fusion concat module added
+Run **SSD_Demo-feature_fused_eltsum_deconvolution.ipynb** to run vgg16 ssd with feature fusion eltsum module added
+Run **SSD_Demo_vgg16-ssd-pyramidal.ipynb** to run vgg16 with modified ssd using pyramidal feature extractor module 
+
+### Training
+Models are trained on VOC2012+2007 trainval set 
+
+**PROJ_vgg16_ssd_train-voc2012-2007_feature_fused_concat_deconvolution.ipynb** to resume training of vgg16 ssd with feature fusion concat module 
+**PROJ_vgg16_ssd_train-voc2012-2007_feature_fused_eltsum_deconvolution.ipynb** to resume training of vgg16 ssd with feature fusion eltsum module
+**PROJ_vgg16_ssd_train-voc2012-2007_pyramidal.ipynb** to resume training of vgg16 ssd usign pyramidal feature extractor module
+
+### Evaluation
+Evaluate the SSD models on the VOC2007 test set. 
+Download the PascalVOC2007 test set using `wget http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar` and run `tar -xvf VOCtest_06-Nov-2007.tar` in the root directory of the repository. 
+Make sure the contents are extracted to `PATH_TO/VOC2007/ ` 
+
+**PROJ_vgg16_ssd_eval_VOC2007testset .ipynb**
+**PROJ_vgg16_ssd_eval_VOC2007testset-feature_fused_concat_deconvolution.ipynb** to evaluate  vgg16 ssd with feature fusion concat module 
+**PROJ_vgg16_ssd_eval_VOC2007testset-feature_fused_eltsum_deconvolution.ipynb** to evaluate  vgg16 ssd with feature fusion eltsum module 
+**PROJ_vgg16_ssd_eval_VOC2007testset-pyramidal.ipynb**  to resume training of vgg16 ssd using pyramidal feature extractor module
+
 ### Performance 
 
+| Category  | Baseline vgg16 SSD (mAP) | SSD with FF concat module (mAP) | SSD with FF eltsum module (mAP) | pyramidal feature extractor
+| ------------- | ------------- ------ | ------------------------------- | ------------------------------- | ------------------------
+| Evaluation  |   77.47%               |   77.985%                        |     77.987%                         |      78.04%
 
-| Category  | Clean Image (mAP) | Noisy Image (mAP) | Denoised Image (mAP) |
-| ------------- | ------------- | ------------- | ------------- |
-| Training  |  88.19% | 52.73% | 73.78% | 
-| Evaluation  | 77.43% | 46.47% | 61.84% |
-
-### Experiments
-- **Training & Optimization Experiments** (Plots for all these experiments can be found inside `optimization_experiments/` folder). The experiemt was run over multiple optimizers as shown below. 
-  - **SSD_train.ipynb** - Runs the training using SGD Optimizer.
-  - **SSD_train_Adam.ipynb** - Runs the training using Adam Optimizer.
-  - **SSD_train_RMSProp.ipynb** - Runs the training using RMSProp Optimizer.
-  - **SSD_train_LearningRate.ipynb** - Runs the training using a range of *learning rates*. Used for hyperparameter tuning.
-  - **SSD_train_Momentum.ipynb** - Runs the training using a range of *momentum* values. Used for hyperparameter tuning.
 
 ### Directory structure
 - data/ -
@@ -152,10 +171,11 @@ Run **SSD_Eval_Testset.ipynb** notebook to evaluate the SSD model on the PascalV
 ### References 
 
 - [Project Statement for Object-Detection](https://www.charles-deledalle.fr/pages/files/ucsd_ece285_mlip/projectC_object_detection.pdf)
-- Inspired by https://github.com/amdegroot/ssd.pytorch for SSD Implementation.
-
-Regarding the Inception Implementation, we referred to:
+- https://github.com/amdegroot/ssd.pytorch for SSD 
 - [INCEPTION SINGLE SHOT MULTIBOX DETECTOR FOR OBJECT DETECTION ](https://sci-hub.tw/10.1109/icmew.2017.8026312)
+- https://arxiv.org/ftp/arxiv/papers/1709/1709.05054.pdf
+- 
+
 
 ## Contributers - 
 
