@@ -98,7 +98,7 @@ SSD with FF eltsum module : 77.987% (mAP)
 
 pyramidal feature extractor (FSSD): 78.04% (mAP) 
   
- 
+ ![alt text](https://lh3.googleusercontent.com/-GInkZiyyVeA/Xe5Ra3aNb3I/AAAAAAAAAFg/BWLdkWxk5yIaJvelN1_CQ3EOH5TbheHPQCK8BGAsYHg/s0/2019-12-09.png)
 
 ### Directory structure
 - architectures
@@ -108,7 +108,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
    - ssd_feature_fused_deconv.py - contains SSD model with feature fusion concat module implemented
    - ssd_feature_fused_deconv_eltsum.py - contains SSD model with feature fusion eltsum module implemented 
 - data/ -
-  - init.py - contains instances:
+  - init.py - contains :
     - function detection_collate - stack images in 0th dimension and list of tensors with annotations for image and return in tuple format, given tuple of tensor images and list of annotations
     - function base_transform - resize and mean-normalize image
     - class BaseTransform - call base_transform(image) iteratively
@@ -120,25 +120,25 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 - layers/ -
   - functions/ - 
     - init.py - import all files in pwd
-    - detection.py - contains instances:
+    - detection.py - contains :
       - class Detect - decode location predictions of bboxes and apply NMS based on confidence values and threshold; restrict to tok_k output predictions to reduce noise in results quality (not actual image noise)
         - function forward - forward propagation to update layers given input location prediction, confidence and prior data from their respective layers
-    - prior_box.py - contains instances:
+    - prior_box.py - contains :
       - class PriorBox - collate and store priorbox coordinates in center-offset form and tie it to each source feature map
         - function init - allocate memory and initialize
         - forward - forward propagation through priorbox layers
   - modules/ -
     - init.py - import all files in pwd
     - l2norm.py 
-      - class L2Norm - calculate L2 norm and normalize
+      - class L2Norm -  L2 norm and normalize
         - function init - allocate memory and initialize
         - forward - compute the norm and return
-    - multibox_loss.py - contains instances:
+    - multibox_loss.py - contains :
       - class MultiBoxLoss - compute targets for confidence and localization and apply HNM; using a loss function that is weighted between the cross entropy loss and a smooth L1 loss (weights were found during cross validation)
         - function init - allocate memory and initialize
         - function forward - forward propagate through multibox layers, given tuple of location and confidence predictions, prior box values and ground truth boxes and labels in tensor format
   - init.py - import all files in pwd
-  - box_utils.py - contains instances:
+  - box_utils.py - contains :
     - function point_form - convert prior box values from center-size format for easy comparison to point form ground truth data
     - function center_size - convert prior box values to center-size format for easy comparison to center-size ground truth data
     - function intersect - compute area of intersection between two given boxes
@@ -151,30 +151,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 - utils/ -
 
   - init.py - import all in pwd
-  - augmentations.py - contains instances of all preprocessing and postprocessing methods:
-    - function intersect - return intersection of two given bounding boxes
-    - function jaccard_numpy - return IoU or jaccard overlap of two given bounding boxes
-    - class Compose - definitions of different transforms to perform
-    - class Lambda - applies a lambda as a transform
-    - class ConvertFromInts - convert object from integers
-    - class SubtractMeans - subtract mean of image from passed image for normalization
-    - class ToAbsoluteCoords - convert lengths (widths, heights) to absolute coordinates
-    - class ToPercentCoords - convert coordinates to percentage values of image height and width
-    - class Resize - resize image
-    - class RandomSaturation - randomly saturate an image
-    - class RandomHue - add a random hue to an image
-    - class RandomLightingNoise - add random lighting noise to an image
-    - class ConvertColor - convert colorspace from BGR to HSV or vice versa
-    - class RandomContrast - add random contrast to an image
-    - class RandomBrightness - add random brightness to an image
-    - class ToCV2Image - shift image to CPU
-    - class ToTensor - shift image to GPU
-    - class RandomSampleCrop - randomly crop an image and return cropped image, adjusted bounding boxes and new class labels
-    - class Expand - expand an image through zero padding and mean-filling, and return along with adjusted bounding boxes and new class labels
-    - class RandomMirror - randomly choose to mirror an image
-    - class SwapChannels - Transform image by swapping channels in the specified order
-    - class PhotometricDistort - apply random brightness and lighting noise, and randomly distort images
-    - class SSDAugmentation - itemize all the above transformation functions on every image iteratively
+  - augmentations.py - contains instances of all preprocessing and postprocessing methods 
 - weights/ - \*.pth files containing pretrained weights of SSD  
 - trained_weights/ - \*.pth files having trained weights of experiments for VOC
 - requirements.txt - package and module requirements for running the project
