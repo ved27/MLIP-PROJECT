@@ -50,8 +50,8 @@ weights - has pre-trained model weights
 ### Demo
 
 Update ` voc_root ` and ` dataset_root ` in config_vgg16_ssd.py with the location of your downloaded dataset.
-`voc_root` -> should contain VOC2007 and VOC2012 directories -> ` PATH_TO/ ` 
-and  `dataset_root ` -> `PATH_TO/VOC2007/` 
+`voc_root`  should contain VOC2007 and VOC2012 directories i.e, let's say `voc_root` = ` PATH_TO/ ` 
+and  `dataset_root ` is then `PATH_TO/VOC2007/` 
 
 Make sure you have folders named `trained_weights` and `weights` now
 
@@ -96,7 +96,7 @@ SSD with FF concat : 77.985%(mAP)
 
 SSD with FF eltsum module : 77.987% (mAP) 
 
-pyramidal feature extractor : 78.04% (mAP) 
+pyramidal feature extractor (FSSD): 78.04% (mAP) 
   
  
 
