@@ -98,10 +98,7 @@ SSD with FF eltsum module : 77.987% (mAP)
 
 pyramidal feature extractor (FSSD): 78.04% (mAP) 
 
- ![alt text](https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png) 
- ![alt text](https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png) 
- ![alt text](https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png) 
- ![alt text](https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png) 
+ ![alt text](https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png)  ![alt text](https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png)  ![alt text](https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png)  ![alt text](https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png) 
 
  mAP
  ![alt text](https://lh3.googleusercontent.com/-GInkZiyyVeA/Xe5Ra3aNb3I/AAAAAAAAAFg/BWLdkWxk5yIaJvelN1_CQ3EOH5TbheHPQCK8BGAsYHg/s0/2019-12-09.png)
