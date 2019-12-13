@@ -100,10 +100,14 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 
 
 
-<img src="https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png" width="200"/>
+<img src="https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png" width="200"/> 
+
+<img src="https://lh3.googleusercontent.com/-Ht8g3un689E/XfL981ZYFDI/AAAAAAAAAHY/2F7bnHUpNx0tcnhmQugv0PxtdGkPQ_xsgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-3f5N6zoEu1s/XfL99tDA9yI/AAAAAAAAAHc/_s7neDD5sy0yNHxtA0N4OXJMTMvMao3lwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ApPPA9OdF-o/XfL9_rFAeCI/AAAAAAAAAHg/WxQFs2hRzcIBly3hF0lmkwanh5wapYlGACK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-N958LD8NgrA/XfL-ATnW2nI/AAAAAAAAAHk/uZV24Tu-MEAosOXRjaaNDKW7V20NTeOZgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> 
 
 
 
+Images in the order 1) baseline )SSD with FF deconv concat 3) SSD with FF eltsum (residual) module 4) pyramidal feature extractor (FSSD) 
+from left to right 
  mAP
  ![alt text](https://lh3.googleusercontent.com/-GInkZiyyVeA/Xe5Ra3aNb3I/AAAAAAAAAFg/BWLdkWxk5yIaJvelN1_CQ3EOH5TbheHPQCK8BGAsYHg/s0/2019-12-09.png)
 
