@@ -100,7 +100,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 
 
 
-<img src="https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png" width="300"/> <img src="https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png" width="300"/>
+<img src="https://lh3.googleusercontent.com/-wGR3ViWLhIM/XfL9vRl8PKI/AAAAAAAAAHI/iwFuBAhpV0ouJUgFQah0vaS27k2damaBwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ZQ25n4TJbvQ/XfL9rAukFUI/AAAAAAAAAHE/JHzt2qa_SYg8vWXtL3IufzonIMuQ5ohiwCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-ho3Wl1RUpkM/XfL9wngSbOI/AAAAAAAAAHM/MYL_EVzLo80Dcj7f1zc_wCRPruYzUPyZgCK8BGAsYHg/s0/2019-12-12.png" width="200"/> <img src="https://lh3.googleusercontent.com/-tghIf1OYxIU/XfL9xp1sOKI/AAAAAAAAAHQ/HafhG8u4HrgQBO58avzUMqgPYkgFwjLZQCK8BGAsYHg/s0/2019-12-12.png" width="200"/>
 
 
 
@@ -162,6 +162,9 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 - requirements.txt - package and module requirements for running the project
 - config_vgg16_ssd.py - has settings to run experiments.
 - test_images/ - contains imags to test the experimented trained models on web and real world images 
+
+
+TODO: Inception style extra layer module 
 
 ### References 
 
