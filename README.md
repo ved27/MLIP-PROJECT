@@ -108,7 +108,7 @@ pyramidal feature extractor (FSSD): 78.04% (mAP)
 
 
 
-Images in the order 1) baseline )SSD with FF deconv concat 3) SSD with FF eltsum (residual) module 4) pyramidal feature extractor (FSSD) 
+ some differentiating predictions on images in the order 1) baseline )SSD with FF deconv concat 3) SSD with FF eltsum (residual) module 4) pyramidal feature extractor (FSSD) 
 from left to right 
 
 
